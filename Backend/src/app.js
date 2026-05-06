@@ -15,6 +15,15 @@ app.use(cors({
     credentials: true
 }))
 
+/* Health check endpoint for Docker/Kubernetes */
+app.get("/health", (req, res) => {
+    res.status(200).json({ 
+        status: "OK", 
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime()
+    })
+})
+
 /* require all the routes here */
 const authRouter = require("./routes/auth.routes")
 const interviewRouter = require("./routes/interview.routes")
